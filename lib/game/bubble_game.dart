@@ -28,6 +28,13 @@ class BubbleGame extends Forge2DGame {
         visibleRect: camera.visibleWorldRect, heightScale: 1.0));
   }
 
+  void setLevel(int newLevel) {
+    final bubbleCtrls = world.children.query<BubbleController>();
+    for (final c in bubbleCtrls) {
+      c.setLevel(newLevel);
+    }
+  }
+
   int tryAnswer(int answer) {
     final allBubbles = world.children.query<Bubble>();
     int count = 0;
@@ -35,6 +42,7 @@ class BubbleGame extends Forge2DGame {
       if (b.answer == answer) {
         count += 1;
         world.remove(b);
+        break;
       }
     }
     return count;

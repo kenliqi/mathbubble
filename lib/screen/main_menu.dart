@@ -10,6 +10,7 @@ class MainMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final game = BubbleGame();
     return Scaffold(
         body: Center(
       child: Column(
@@ -30,8 +31,8 @@ class MainMenu extends StatelessWidget {
             child: ElevatedButton(
               child: const Text('Play'),
               onPressed: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => PlayScreen(game: BubbleGame())));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => PlayScreen(game: game)));
               },
             ),
           ),
@@ -40,9 +41,13 @@ class MainMenu extends StatelessWidget {
             child: ElevatedButton(
               child: const Text('Levels'),
               onPressed: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) =>
-                        LevelScreen(levelController: LevelController())));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => LevelScreen(
+                              levelController: LevelController(),
+                              game: game,
+                            )));
               },
             ),
           )

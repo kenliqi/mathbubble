@@ -8,6 +8,7 @@ import 'bubble.dart';
 
 class BubbleController extends Component with HasGameRef<BubbleGame> {
   int interval;
+  int level = 1;
   late Timer spawnTimer;
   final Random random = Random();
   final ProblemController problemController;
@@ -17,12 +18,16 @@ class BubbleController extends Component with HasGameRef<BubbleGame> {
     spawnTimer = Timer(interval.toDouble(), repeat: true, onTick: spawnBubble);
   }
 
+  void setLevel(int newLevel) {
+    level = newLevel;
+  }
+
   void spawnBubble() {
     //TODO: add the bubble spec into the constructor
     final ballPos = game.getRandomBallPosition();
     // print('the game rect in spawn ${game.camera.visibleWorldRect}');
     // print('spawn a ball at $ballPos');
-    final problem = problemController.get(5);
+    final problem = problemController.get(level);
     final box = Bubble(problem: problem, initialPosition: ballPos);
     game.world.add(box);
   }
