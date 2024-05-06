@@ -13,7 +13,10 @@ class BubbleController extends Component with HasGameRef<BubbleGame> {
   final Random random = Random();
   final ProblemController problemController;
 
-  BubbleController({required this.interval, required this.problemController})
+  BubbleController(
+      {required this.level,
+      required this.interval,
+      required this.problemController})
       : super() {
     spawnTimer = Timer(interval.toDouble(), repeat: true, onTick: spawnBubble);
   }
@@ -27,6 +30,7 @@ class BubbleController extends Component with HasGameRef<BubbleGame> {
     final ballPos = game.getRandomBallPosition();
     // print('the game rect in spawn ${game.camera.visibleWorldRect}');
     // print('spawn a ball at $ballPos');
+    print('generating a problem with level ${level}');
     final problem = problemController.get(level);
     final box = Bubble(problem: problem, initialPosition: ballPos);
     game.world.add(box);

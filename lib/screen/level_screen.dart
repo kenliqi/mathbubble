@@ -1,15 +1,41 @@
-import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
-import 'package:mathbubble/game/bubble_game.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../maths/level_controller.dart';
 
-class LevelScreen extends StatelessWidget {
-  final LevelController levelController;
-  final BubbleGame game;
+class LevelScreen extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => LevelScreenState();
+}
 
-  const LevelScreen(
-      {super.key, required this.levelController, required this.game});
+class LevelScreenState extends State<LevelScreen> {
+  final LevelController levelController = LevelController();
+  late SharedPreferences _prefs;
+  int level = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    _initPrefs();
+  }
+
+  _initPrefs() async {
+    _prefs = await SharedPreferences.getInstance();
+    _loadLevel();
+  }
+
+  _loadLevel() {
+    setState(() {
+      level = _prefs.getInt('level') ?? 1;
+    });
+  }
+
+  _saveLevel(int value) {
+    _prefs.setInt('level', value);
+    setState(() {
+      level = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +54,8 @@ class LevelScreen extends StatelessWidget {
                     title: Text('Level ${index + 1}'),
                     subtitle:
                         Text(levelController.getLevel(index + 1)!.description),
-                    onTap: () => {game.setLevel(index + 1)},
+                    onTap: () => {_saveLevel(index + 1)},
+                    selected: level == index + 1,
                   ),
                 );
               },

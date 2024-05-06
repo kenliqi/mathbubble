@@ -12,7 +12,7 @@ class Bubble extends BodyComponent {
       : super(
           fixtureDefs: [
             FixtureDef(
-              CircleShape()..radius = problem.level * 5.0,
+              CircleShape()..radius = 5.0,
               restitution: 0.1,
               density: 1.0,
               friction: 0,

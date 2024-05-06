@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:mathbubble/maths/level_controller.dart';
-import 'package:mathbubble/screen/level_screen.dart';
 import 'package:mathbubble/screen/play_screen.dart';
 
-import '../game/bubble_game.dart';
+import 'level_screen.dart';
 
-class MainMenu extends StatelessWidget {
+class MainMenu extends StatefulWidget {
   const MainMenu({super.key});
 
   @override
+  State<StatefulWidget> createState() {
+    return MainMenuStateful();
+  }
+}
+
+class MainMenuStateful extends State<MainMenu> {
+  @override
   Widget build(BuildContext context) {
-    final game = BubbleGame();
     return Scaffold(
         body: Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Padding(
+          const Padding(
             padding: EdgeInsets.symmetric(vertical: 50.0),
             child: Text(
               "Crazy Maths",
@@ -31,8 +35,8 @@ class MainMenu extends StatelessWidget {
             child: ElevatedButton(
               child: const Text('Play'),
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => PlayScreen(game: game)));
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => PlayScreen()));
               },
             ),
           ),
@@ -41,13 +45,8 @@ class MainMenu extends StatelessWidget {
             child: ElevatedButton(
               child: const Text('Levels'),
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => LevelScreen(
-                              levelController: LevelController(),
-                              game: game,
-                            )));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LevelScreen()));
               },
             ),
           )
